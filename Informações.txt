@@ -1,0 +1,10 @@
+http://localhost:8080/swagger-ui/index.html
+
+{
+  "cpf": "111222333444",
+  "nome": "Vini",
+  "rg": "111123323",
+  "dataNascimento": "2000-11-20T22:48:00.115Z",
+  "telefone": "11947272727",
+  "email": "teste@teste.com",
+}
