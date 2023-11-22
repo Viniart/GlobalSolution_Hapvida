@@ -1,10 +1,11 @@
-http://localhost:8080/swagger-ui/index.html
+Projeto desenvolvido em Java 19
 
-{
-  "cpf": "111222333444",
-  "nome": "Vini",
-  "rg": "111123323",
-  "dataNascimento": "2000-11-20T22:48:00.115Z",
-  "telefone": "11947272727",
-  "email": "teste@teste.com",
-}
+Projetos podem ser executados em qualquer ordem
+(De Preferência - Paciente -> Telemedicina -> Análise de Dados)
+
+http://localhost:8080/swagger-ui/index.html - API de Paciente
+
+http://localhost:8082/swagger-ui/index.html - API de Telemedicina
+
+http://localhost:8081/swagger-ui/index.html - API de Análise de Dados e Log
+
