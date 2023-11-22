@@ -5,10 +5,10 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: 38282507
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:oracle:thin:@oracle.fiap.com.br:1521:ORCL
+    username: rm88402
+    password: 230502
+#    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -16,8 +16,8 @@ spring:
     properties:
       hibernate:
         format_sql: true
-    database: postgresql
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database: oracle
+#    database-platform: org.hibernate.dialect.Ora
 #  kafka:
 #    bootstrap-servers: localhost:9092
   kafka:
