@@ -1,8 +1,8 @@
-package com.hapvida.telemedicina.controller;
+package com.hapvida.pacientes.controller;
 
-import com.hapvida.telemedicina.model.Consulta;
-import com.hapvida.telemedicina.model.Paciente;
-import com.hapvida.telemedicina.service.ConsultaService;
+import com.hapvida.pacientes.model.Historico;
+import com.hapvida.pacientes.model.Paciente;
+import com.hapvida.pacientes.service.HistoricoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.HttpStatus;
@@ -13,43 +13,44 @@ import org.springframework.web.bind.annotation.*;
 import java.util.NoSuchElementException;
 
 @RestController
-@RequestMapping("api/v1/consultas")
-public class ConsultaController {
-    private ConsultaService service;
+@RequestMapping("api/v1/historico")
+public class HistoricoController {
+    private HistoricoService service;
 
-    private KafkaTemplate<String, Consulta> kafkaTemplate;
+    private KafkaTemplate<String, Paciente> kafkaTemplate;
 
-    public ConsultaController(ConsultaService service, KafkaTemplate<String, Consulta> kafkaTemplate) {
+    public HistoricoController(HistoricoService service, KafkaTemplate<String, Paciente> kafkaTemplate) {
         this.service = service;
         this.kafkaTemplate = kafkaTemplate;
     }
 
+
     @GetMapping
-    @Operation(summary = "Retorna a lista de consultas", description = "Método que acessa o método listarTodos do service para exibir a lista de consultas")
+    @Operation(summary = "Retorna a lista de historicos", description = "Método que acessa o método listarTodos do service para exibir a lista de historicos")
     @ApiResponse(
             responseCode = "200",
             description = "Sucesso"
     )
-    public ResponseEntity listarConsultas() {
+    public ResponseEntity listarHistoricos() {
         return new ResponseEntity(service.listarTodos(), HttpStatus.OK);
     }
 
     @PostMapping(value = "/novo")
-    @Operation(summary = "Cadastra uma nova consulta", description = "Método que acessa o método cadastrarConsulta do service passando uma consulta a ser cadastrada")
+    @Operation(summary = "Cadastra um novo historico", description = "Método que acessa o método cadastrarHistorico do service passando um historico a ser cadastrado")
     @ApiResponse(
             responseCode = "201",
             description = "Cadastro bem sucedido!"
     )
-    public ResponseEntity cadastrarConsulta(@RequestBody Consulta consulta) {
+    public ResponseEntity cadastrarHistorico(@RequestBody Historico historico) {
 
-        service.cadastrarconsulta(consulta);
-        kafkaTemplate.send("consulta", consulta);
+        service.cadastrarHistorico(historico);
+//        kafkaTemplate.send("pacientes", paciente);
         return new ResponseEntity("Cadastrado com Sucesso!", HttpStatus.CREATED);
 
     }
 
     @DeleteMapping(value = "/deletar/{id}")
-    @Operation(summary = "Exclui uma consulta", description = "Método que acessa o método deletarConsulta do service passando o id para a remover da lista")
+    @Operation(summary = "Exclui um historico", description = "Método que acessa o método deletarHistorico do service passando o id para a remover da lista")
     @ApiResponse(
             responseCode = "200",
             description = "Exclusão bem sucedida!"
@@ -58,10 +59,10 @@ public class ConsultaController {
             responseCode = "400",
             description = "ID não encontrado!"
     )
-    public ResponseEntity excluirConsulta(@PathVariable Integer id) {
+    public ResponseEntity excluirHistorico(@PathVariable Integer id) {
 
         try {
-            service.deletarconsulta(id);
+            service.deletarHistorico(id);
         }
         catch (NoSuchElementException e) {
             return new ResponseEntity("ID Inválido!", HttpStatus.BAD_REQUEST);
@@ -72,7 +73,7 @@ public class ConsultaController {
     }
 
     @PutMapping(value = "/editar/{id}")
-    @Operation(summary = "Altera um paciente", description = "Método que acessa o método alteraraConsulta do service passando o id para atualizar a lista")
+    @Operation(summary = "Altera um historico", description = "Método que acessa o método alterarHistorico do service passando o id para atualizar a lista")
     @ApiResponse(
             responseCode = "200",
             description = "Alteração bem sucedida!"
@@ -81,10 +82,10 @@ public class ConsultaController {
             responseCode = "400",
             description = "ID não encontrado!"
     )
-    public ResponseEntity alterarConsulta(@PathVariable Integer id, @RequestBody Consulta consulta) {
+    public ResponseEntity alterarHistorico(@PathVariable Integer id, @RequestBody Historico historico) {
 
         try {
-            service.editarconsulta(id, consulta);
+            service.editarHistorico(id, historico);
         }
         catch (NoSuchElementException e) {
             return new ResponseEntity("ID Inválido!", HttpStatus.BAD_REQUEST);

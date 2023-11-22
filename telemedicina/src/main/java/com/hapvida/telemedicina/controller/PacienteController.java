@@ -1,7 +1,8 @@
-package com.hapvida.pacientes.controller;
+package com.hapvida.telemedicina.controller;
 
-import com.hapvida.pacientes.model.Paciente;
-import com.hapvida.pacientes.service.PacienteService;
+import com.hapvida.telemedicina.model.Consulta;
+import com.hapvida.telemedicina.model.Paciente;
+import com.hapvida.telemedicina.service.PacienteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.HttpStatus;
@@ -14,13 +15,11 @@ import java.util.NoSuchElementException;
 @RestController
 @RequestMapping("api/v1/paciente")
 public class PacienteController {
-
-
     private PacienteService service;
 
-    private KafkaTemplate<String, Paciente> kafkaTemplate;
+    private KafkaTemplate<String, Consulta> kafkaTemplate;
 
-    public PacienteController(PacienteService service, KafkaTemplate<String, Paciente> kafkaTemplate) {
+    public PacienteController(PacienteService service, KafkaTemplate<String, Consulta> kafkaTemplate) {
         this.service = service;
         this.kafkaTemplate = kafkaTemplate;
     }
@@ -44,7 +43,7 @@ public class PacienteController {
     public ResponseEntity cadastrarPaciente(@RequestBody Paciente paciente) {
 
         service.cadastrarPaciente(paciente);
-        kafkaTemplate.send("pacientes", paciente);
+//        kafkaTemplate.send("pacientes", paciente.getCpf());
         return new ResponseEntity("Cadastrado com Sucesso!", HttpStatus.CREATED);
 
     }
@@ -94,6 +93,4 @@ public class PacienteController {
         return new ResponseEntity("Excluído com Sucesso", HttpStatus.OK);
 
     }
-
-
 }

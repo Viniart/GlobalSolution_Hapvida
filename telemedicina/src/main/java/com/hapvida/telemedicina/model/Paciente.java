@@ -1,13 +1,15 @@
-package com.hapvida.pacientes.model;
+package com.hapvida.telemedicina.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
-@Entity(name = "paciente")
+@Entity(name = "tb_paciente")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Paciente {
     @Id
     private String cpf;
@@ -17,10 +19,4 @@ public class Paciente {
     private String telefone;
     private String email;
     private String rotaImagem;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_historico", referencedColumnName = "id")
-    @JsonIgnoreProperties("paciente")
-    private Historico historico;
-
 }
